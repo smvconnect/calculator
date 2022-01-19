@@ -3,21 +3,23 @@ import java.util.Scanner;
 public class Calculator {
 
     public static void main(String[] args) {
-        int result;
-        result = calculate(inputNumber(), inputCharacter(), inputNumber());
-        System.out.println("F" + result);
+        int result = 0;
+        char operation;
+        result = calculate(inputNumber(), inputOperation(), inputNumber());
+        System.out.println("Result = " + result);
         do {
-            switch (inputCharacter()) {
-                case 'C':
-                    result = calculate(inputNumber(), inputCharacter(), inputNumber());
-                    System.out.println("F" + result);
-                    break;
-                case 's':
-
-
+            operation = inputOperation();
+            if (operation == 'C') {
+                result = 0;
+                result = calculate(inputNumber(), inputOperation(), inputNumber());
+                System.out.println("Result = " + result);
+            } else if (operation == 's') {
+                System.out.println("Exit");
+                break;
+            } else {
+                result = calculate(result, operation, inputNumber());
+                System.out.println("Result = " + result);
             }
-                result = calculate(result, inputCharacter(), inputNumber());
-                System.out.println("R" + result);
         } while (true);
     }
 
@@ -28,10 +30,22 @@ public class Calculator {
         return operand;
     }
 
-    public static char inputCharacter() {
+    public static char inputOperation() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the character:");
-        char operation = scanner.next().charAt(0);
+        System.out.println("Enter the operation:");
+        char operation;
+        do {
+            operation = scanner.next().charAt(0);
+            if (operation == '+' 
+                    || operation == '-' 
+                    || operation == '*' 
+                    || operation == '/' 
+                    || operation == 'C' 
+                    || operation == 's') { 
+                break;
+            }
+            System.out.println("Incorrect operation.\nPlease, try enter the operation again:");
+        } while (true);
         return operation;
     }
 
